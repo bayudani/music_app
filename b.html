@@ -1,11 +1,333 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music Streaming Platform</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            dark: '#121826',
+            darkBlue: '#1A2235',
+            accent: '#3B82F6'
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
 </head>
-<body>
-    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4GfK1qOF3uBWidbPlTCQRL?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+<body class="bg-dark text-white">
+  <div class="container mx-auto p-4">
+    <!-- Artist Header Section -->
+    <div class="relative w-full h-96 rounded-lg overflow-hidden mb-8">
+      <img src="/placeholder.svg?height=400&width=1200" alt="Artist Background" class="w-full h-full object-cover">
+      <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent"></div>
+      <div class="absolute bottom-0 left-0 p-6">
+        <div class="flex items-center mb-2">
+          <div class="bg-accent rounded-full p-1 mr-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <span class="text-sm font-medium">Verified Artist</span>
+        </div>
+        <h1 class="text-5xl font-bold mb-2">Bonnie Green</h1>
+        <div class="flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+          </svg>
+          <span class="text-lg">45,867,078 monthly listeners</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Left and Middle Content -->
+      <div class="lg:col-span-2">
+        <!-- Made for you Section -->
+        <div class="mb-8">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold">Made for you</h2>
+            <a href="#" class="text-accent hover:underline">Show all</a>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            <!-- Discover Weekly -->
+            <div class="bg-darkBlue rounded-lg p-4 hover:bg-opacity-80 transition">
+              <div class="aspect-square bg-purple-900 rounded-lg mb-3 overflow-hidden">
+                <img src="/placeholder.svg?height=200&width=200" alt="Discover Weekly" class="w-full h-full object-cover">
+              </div>
+              <h3 class="font-semibold">Discover Weekly</h3>
+              <p class="text-sm text-gray-400">Your weekly mixtape of fresh music.</p>
+            </div>
+            
+            <!-- Daily Mix 1 -->
+            <div class="bg-darkBlue rounded-lg p-4 hover:bg-opacity-80 transition">
+              <div class="aspect-square bg-blue-900 rounded-lg mb-3 overflow-hidden">
+                <img src="/placeholder.svg?height=200&width=200" alt="Daily Mix 1" class="w-full h-full object-cover">
+              </div>
+              <h3 class="font-semibold">Daily Mix 1</h3>
+              <p class="text-sm text-gray-400">Avicii, Lady Gaga, Tiesto and more.</p>
+            </div>
+            
+            <!-- Daily Mix 2 -->
+            <div class="bg-darkBlue rounded-lg p-4 hover:bg-opacity-80 transition">
+              <div class="aspect-square bg-green-900 rounded-lg mb-3 overflow-hidden">
+                <img src="/placeholder.svg?height=200&width=200" alt="Daily Mix 2" class="w-full h-full object-cover">
+              </div>
+              <h3 class="font-semibold">Daily Mix 2</h3>
+              <p class="text-sm text-gray-400">Imagine Dragons, The Weekend and more.</p>
+            </div>
+            
+            <!-- Daily Mix 3 -->
+            <div class="bg-darkBlue rounded-lg p-4 hover:bg-opacity-80 transition">
+              <div class="aspect-square bg-purple-700 rounded-lg mb-3 overflow-hidden">
+                <img src="/placeholder.svg?height=200&width=200" alt="Daily Mix 3" class="w-full h-full object-cover">
+              </div>
+              <h3 class="font-semibold">Daily Mix 3</h3>
+              <p class="text-sm text-gray-400">Your weekly mixtape of fresh music.</p>
+            </div>
+            
+            <!-- Daily Mix 4 -->
+            <div class="bg-darkBlue rounded-lg p-4 hover:bg-opacity-80 transition">
+              <div class="aspect-square bg-red-900 rounded-lg mb-3 overflow-hidden">
+                <img src="/placeholder.svg?height=200&width=200" alt="Daily Mix 4" class="w-full h-full object-cover">
+              </div>
+              <h3 class="font-semibold">Daily Mix 4</h3>
+              <p class="text-sm text-gray-400">Ed Sheeran, Taylor Swift and more.</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Recently Played Section -->
+        <div>
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold">Recently played</h2>
+            <a href="#" class="text-accent hover:underline">Show all</a>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            <!-- Recently Played Item 1 -->
+            <div class="bg-darkBlue rounded-lg p-4 hover:bg-opacity-80 transition">
+              <div class="aspect-square bg-teal-900 rounded-lg mb-3 overflow-hidden">
+                <img src="/placeholder.svg?height=200&width=200" alt="Recently Played 1" class="w-full h-full object-cover">
+              </div>
+              <h3 class="font-semibold truncate">Summer Hits</h3>
+              <p class="text-sm text-gray-400 truncate">Playlist</p>
+            </div>
+            
+            <!-- Recently Played Item 2 -->
+            <div class="bg-darkBlue rounded-lg p-4 hover:bg-opacity-80 transition">
+              <div class="aspect-square bg-orange-900 rounded-lg mb-3 overflow-hidden">
+                <img src="/placeholder.svg?height=200&width=200" alt="Recently Played 2" class="w-full h-full object-cover">
+              </div>
+              <h3 class="font-semibold truncate">Chill Vibes</h3>
+              <p class="text-sm text-gray-400 truncate">Playlist</p>
+            </div>
+            
+            <!-- Recently Played Item 3 -->
+            <div class="bg-darkBlue rounded-lg p-4 hover:bg-opacity-80 transition">
+              <div class="aspect-square bg-indigo-900 rounded-lg mb-3 overflow-hidden">
+                <img src="/placeholder.svg?height=200&width=200" alt="Recently Played 3" class="w-full h-full object-cover">
+              </div>
+              <h3 class="font-semibold truncate">Electronic Mix</h3>
+              <p class="text-sm text-gray-400 truncate">Playlist</p>
+            </div>
+            
+            <!-- Recently Played Item 4 -->
+            <div class="bg-darkBlue rounded-lg p-4 hover:bg-opacity-80 transition">
+              <div class="aspect-square bg-yellow-900 rounded-lg mb-3 overflow-hidden">
+                <img src="/placeholder.svg?height=200&width=200" alt="Recently Played 4" class="w-full h-full object-cover">
+              </div>
+              <h3 class="font-semibold truncate">Acoustic Sessions</h3>
+              <p class="text-sm text-gray-400 truncate">Playlist</p>
+            </div>
+            
+            <!-- Recently Played Item 5 -->
+            <div class="bg-darkBlue rounded-lg p-4 hover:bg-opacity-80 transition">
+              <div class="aspect-square bg-pink-900 rounded-lg mb-3 overflow-hidden">
+                <img src="/placeholder.svg?height=200&width=200" alt="Recently Played 5" class="w-full h-full object-cover">
+              </div>
+              <h3 class="font-semibold truncate">Top Hits 2025</h3>
+              <p class="text-sm text-gray-400 truncate">Playlist</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Sidebar -->
+      <div class="lg:col-span-1">
+        <!-- Trending Songs -->
+        <div class="mb-8">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-bold">TRENDING SONGS</h2>
+            <a href="#" class="text-accent hover:underline">Show all</a>
+          </div>
+          <div class="space-y-3">
+            <!-- Song 1 -->
+            <div class="flex items-center bg-darkBlue bg-opacity-50 rounded-lg p-2 hover:bg-opacity-70 transition">
+              <div class="w-12 h-12 rounded overflow-hidden mr-3 flex-shrink-0">
+                <img src="/placeholder.svg?height=48&width=48" alt="Blinding Lights" class="w-full h-full object-cover">
+              </div>
+              <div class="flex-grow">
+                <h3 class="font-medium">Blinding Lights</h3>
+                <p class="text-sm text-gray-400">The Weeknd</p>
+              </div>
+              <button class="w-8 h-8 rounded-full bg-accent flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+            </div>
+            
+            <!-- Song 2 -->
+            <div class="flex items-center bg-darkBlue bg-opacity-50 rounded-lg p-2 hover:bg-opacity-70 transition">
+              <div class="w-12 h-12 rounded overflow-hidden mr-3 flex-shrink-0">
+                <img src="/placeholder.svg?height=48&width=48" alt="My Love" class="w-full h-full object-cover">
+              </div>
+              <div class="flex-grow">
+                <h3 class="font-medium">My Love</h3>
+                <p class="text-sm text-gray-400">Florence + The Machine</p>
+              </div>
+              <button class="w-8 h-8 rounded-full bg-accent flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+            </div>
+            
+            <!-- Song 3 -->
+            <div class="flex items-center bg-darkBlue bg-opacity-50 rounded-lg p-2 hover:bg-opacity-70 transition">
+              <div class="w-12 h-12 rounded overflow-hidden mr-3 flex-shrink-0">
+                <img src="/placeholder.svg?height=48&width=48" alt="Crash" class="w-full h-full object-cover">
+              </div>
+              <div class="flex-grow">
+                <h3 class="font-medium">Crash</h3>
+                <p class="text-sm text-gray-400">Jose & Bbb Band</p>
+              </div>
+              <button class="w-8 h-8 rounded-full bg-accent flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+            </div>
+            
+            <!-- Song 4 -->
+            <div class="flex items-center bg-darkBlue bg-opacity-50 rounded-lg p-2 hover:bg-opacity-70 transition">
+              <div class="w-12 h-12 rounded overflow-hidden mr-3 flex-shrink-0">
+                <img src="/placeholder.svg?height=48&width=48" alt="Maybe You" class="w-full h-full object-cover">
+              </div>
+              <div class="flex-grow">
+                <h3 class="font-medium">Maybe You</h3>
+                <p class="text-sm text-gray-400">Bonnie Green</p>
+              </div>
+              <button class="w-8 h-8 rounded-full bg-accent flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+            </div>
+            
+            <!-- Song 5 -->
+            <div class="flex items-center bg-darkBlue bg-opacity-50 rounded-lg p-2 hover:bg-opacity-70 transition">
+              <div class="w-12 h-12 rounded overflow-hidden mr-3 flex-shrink-0">
+                <img src="/placeholder.svg?height=48&width=48" alt="I'm Yours" class="w-full h-full object-cover">
+              </div>
+              <div class="flex-grow">
+                <h3 class="font-medium">I'm Yours</h3>
+                <p class="text-sm text-gray-400">Jese Leos feat. Tymo</p>
+              </div>
+              <button class="w-8 h-8 rounded-full bg-accent flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+            </div>
+            
+            <!-- Song 6 -->
+            <div class="flex items-center bg-darkBlue bg-opacity-50 rounded-lg p-2 hover:bg-opacity-70 transition">
+              <div class="w-12 h-12 rounded overflow-hidden mr-3 flex-shrink-0">
+                <img src="/placeholder.svg?height=48&width=48" alt="My Universe" class="w-full h-full object-cover">
+              </div>
+              <div class="flex-grow">
+                <h3 class="font-medium">My Universe</h3>
+                <p class="text-sm text-gray-400">Leslie Livingston</p>
+              </div>
+              <button class="w-8 h-8 rounded-full bg-accent flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+            </div>
+            
+            <!-- Song 7 -->
+            <div class="flex items-center bg-darkBlue bg-opacity-50 rounded-lg p-2 hover:bg-opacity-70 transition">
+              <div class="w-12 h-12 rounded overflow-hidden mr-3 flex-shrink-0">
+                <img src="/placeholder.svg?height=48&width=48" alt="Fils de Joie" class="w-full h-full object-cover">
+              </div>
+              <div class="flex-grow">
+                <h3 class="font-medium">Fils de Joie</h3>
+                <p class="text-sm text-gray-400">Rob Casas</p>
+              </div>
+              <button class="w-8 h-8 rounded-full bg-accent flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+            </div>
+            
+            <!-- Song 8 -->
+            <div class="flex items-center bg-darkBlue bg-opacity-50 rounded-lg p-2 hover:bg-opacity-70 transition">
+              <div class="w-12 h-12 rounded overflow-hidden mr-3 flex-shrink-0">
+                <img src="/placeholder.svg?height=48&width=48" alt="That's What I Want" class="w-full h-full object-cover">
+              </div>
+              <div class="flex-grow">
+                <h3 class="font-medium">That's What I Want</h3>
+                <p class="text-sm text-gray-400">Mc Fallen & Toybr</p>
+              </div>
+              <button class="w-8 h-8 rounded-full bg-accent flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Trending Albums -->
+        <div>
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-bold">TRENDING ALBUMS</h2>
+            <a href="#" class="text-accent hover:underline">Show all</a>
+          </div>
+          <div class="space-y-3">
+            <!-- Album 1 -->
+            <div class="flex items-center bg-darkBlue bg-opacity-50 rounded-lg p-2 hover:bg-opacity-70 transition">
+              <div class="w-12 h-12 rounded overflow-hidden mr-3 flex-shrink-0">
+                <img src="/placeholder.svg?height=48&width=48" alt="Album 1" class="w-full h-full object-cover">
+              </div>
+              <div class="flex-grow">
+                <h3 class="font-medium">Blinding Lights</h3>
+                <p class="text-sm text-gray-400">The Weeknd</p>
+              </div>
+              <button class="w-8 h-8 rounded-full bg-accent flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
