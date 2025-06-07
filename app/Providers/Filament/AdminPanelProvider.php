@@ -27,6 +27,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandName('Music app')
             ->colors([
                 'primary' => Color::Amber,
             ])
