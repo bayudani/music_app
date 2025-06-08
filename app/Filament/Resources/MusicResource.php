@@ -39,11 +39,13 @@ class MusicResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('detail')
                     ->maxLength(255),
-                Forms\Components\RichEditor::make('iframe_spotify')
-                    ->toolbarButtons(['codeBlock']) // biar bisa tempel HTML
-                    ->disableToolbarButtons(['attachFiles']) // opsional
-                    // ->maxLength(65535)
+                Forms\Components\TextInput::make('iframe_spotify')
                     ->required(),
+                // Forms\Components\RichEditor::make('iframe_spotify')
+                //     ->toolbarButtons(['codeBlock']) // biar bisa tempel HTML
+                //     ->disableToolbarButtons(['attachFiles']) // opsional
+                //     // ->maxLength(65535)
+                //     ->required(),
             ]);
     }
 
