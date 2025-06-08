@@ -8,39 +8,29 @@ use Illuminate\Http\Request;
 class MusicController extends Controller
 {
     // get all music tracks
-    public function index()
+    public function index(Request $request)
     {
-        $recentlyPlayedCookie = request()->cookie('recentlyPlayed', '{}');
 
-        $recentlyPlayedData = json_decode($recentlyPlayedCookie, true);
+        $limit = 10;
+        $offset = $request->get('offset', 0);
 
-        $recentlyPlayed = collect();
-
-        if (!empty($recentlyPlayedData)) {
-            // Ambil key (ID lagu), urutkan berdasarkan waktu klik (nilai timestamp)
-            arsort($recentlyPlayedData); // urutkan descending berdasarkan timestamp
-
-            // Ambil 5 ID lagu terakhir yang diklik
-            $recentlyPlayedIds = array_slice(array_keys($recentlyPlayedData), 0, 5, true);
-
-            // Ambil data musik sesuai ID, lengkap dengan relasi
-            $recentlyPlayed = Music::with('artist', 'genre')
-                ->whereIn('id', $recentlyPlayedIds)
-                ->get()
-                // Urutkan sesuai urutan ID yang diambil
-                ->sortBy(function ($music) use ($recentlyPlayedIds) {
-                    return array_search($music->id, $recentlyPlayedIds);
-                })
-                ->values();
-        }
-
-        $musics = Music::with('artist', 'genre')->get();
-        $popularMusics = Music::where('click_count', '>', 0)
-            ->orderBy('click_count', 'desc')
-            ->take(5)
+        $musics = Music::with('artist', 'genre')
+            ->inRandomOrder()
+            ->skip($offset)
+            ->take($limit)
             ->get();
 
-        return view('home', compact('musics', 'recentlyPlayed', 'popularMusics'));
+        // Kalau permintaan AJAX (load more), kirim partial saja
+        if ($request->ajax()) {
+            return view('partials._music_items', compact('musics'))->render();
+        }
+
+        $musics = Music::all(); // Ganti dengan query sesuai kebutuhan
+        $recentlyPlayed = []; // Ganti dengan logika untuk lagu yang baru diputar
+        $popularMusics = music::orderBy('click_count', 'desc')
+            ->take(5) // ambil 5 lagu terpopuler
+            ->get();
+        return view('home', compact('musics', 'recentlyPlayed', 'popularMusics')); // Buat view home.blade.php jika perlu
     }
 
 
@@ -62,6 +52,27 @@ class MusicController extends Controller
         );
     }
 
+    public function lazyLoad(Request $request)
+    {
+        $offset = intval($request->query('offset', 0));
+        $limit = intval($request->query('limit', 15));
+        $musics = Music::orderBy('created_at', 'desc')->skip($offset)->take($limit)->get();
+
+        $html = '';
+        foreach ($musics as $music) {
+            $html .= '
+            <a href="' . route('music.show', $music->id) . '" class="block bg-white rounded-lg p-4 shadow hover:shadow-lg transition">
+                <div class="aspect-square bg-gray-100 rounded-lg mb-3 overflow-hidden">
+                    <img src="' . asset('storage/' . $music->image) . '" alt="' . e($music->title) . '" class="w-full h-full object-cover">
+                </div>
+                <h3 class="font-semibold text-darkBlue">' . e($music->title) . '</h3>
+                <p class="text-sm text-gray-700">' . ($music->artist->name ?? '-') . '</p>
+                <p class="text-xs text-gray-500 mt-1">' . ($music->genre->name ?? '-') . '</p>
+            </a>
+            ';
+        }
+        return $html;
+    }
 
 
     public function features()
@@ -86,23 +97,21 @@ class MusicController extends Controller
         $music->increment('click_count');
         return view('detail', compact('music')); // Buat view music/show.blade.php jika perlu
     }
-
-    public function popular($id)
+    public function popular()
     {
-        $music = Music::with(['artist', 'genre'])->findOrFail($id);
-
-        $recentlyPlayed = explode(',', request()->cookie('recentlyPlayed', ''));
-        $recentlyPlayed = array_unique(array_merge([$id], $recentlyPlayed));
-        $recentlyPlayed = array_slice($recentlyPlayed, 0, 5); // Batas 5 lagu terakhir
-
-        return response()
-            ->view('music.show', compact('music'))
-            ->cookie('recentlyPlayed', implode(',', $recentlyPlayed), 60 * 24 * 7); // Simpan 7 hari
-
         $popularMusics = music::orderBy('click_count', 'desc')
             ->take(5) // ambil 5 lagu terpopuler
             ->get();
 
         return view('music.popular', compact('popularMusics'));
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('q');
+
+        $results = music::search($query)->get();
+
+        return view('search-results', compact('results', 'query'));
     }
 }

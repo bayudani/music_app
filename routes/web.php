@@ -12,11 +12,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MusicController::class, 'index']);
 
-
+Route::get('/music/lazyload', [MusicController::class, 'lazyLoad'])->name('music.lazyload');
 Route::get('/songs', [MusicController::class, 'index'])->name('songs');
 Route::get('/features', [MusicController::class, 'features'])->name('features');
 Route::get('/about', [MusicController::class, 'about'])->name('about');
 Route::get('/contact', [MusicController::class, 'contact'])->name('contact');
+Route::get('/search', [MusicController::class, 'search'])->name('music.search');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');

@@ -4,33 +4,75 @@
 
 @section('content')
     <!-- Artist Header Section -->
-    <div class="relative w-full h-96 rounded-lg overflow-hidden mb-8">
+    <div class="relative w-full h-96 rounded-lg overflow-hidden mb-8" id="musicBanner">
         @if ($musics->isNotEmpty())
             @php
-                $firstMusic = $musics->first();
+                $firstMusic = $musics->random();
             @endphp
-            <img src="{{ asset('storage/' . $firstMusic->image) }}" alt="Cover Image" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent"></div>
-            <div class="absolute bottom-0 left-0 p-6">
-                <div class="flex items-center mb-2">
-                    <div class="bg-accent rounded-full p-1 mr-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                    </div>
-                    <span class="text-sm font-medium">Verified Artist</span>
-                </div>
-                <h1 class="text-5xl font-bold mb-2">{{ $firstMusic->artist->name ?? 'Top Artist' }}</h1>
-                <div class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-                    </svg>
-                    <span class="text-lg">Musics: {{ $musics->count() }}</span>
-                </div>
+            <img id="bannerImage" src="{{ asset('storage/' . $firstMusic->image) }}" alt="Cover Image"
+                class="w-full h-full object-cover absolute inset-0 transition-opacity duration-500 opacity-100 z-0">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent z-10"></div>
+            <div class="absolute bottom-0 left-0 p-6 z-20">
+                <h1 id="bannerArtist" class="text-5xl font-bold mb-2 text-white transition-opacity duration-500 opacity-100">
+                    {{ $firstMusic->artist->name ?? 'Top Artist' }}
+                </h1>
+                <h2 id="bannerTitle" class="text-2xl font-semibold text-white transition-opacity duration-500 opacity-100">
+                    {{ $firstMusic->title }}
+                </h2>
             </div>
+            <!-- Overlay image for cross-fade -->
+            <img id="bannerImageNext" src="" alt=""
+                class="w-full h-full object-cover absolute inset-0 transition-opacity duration-500 opacity-0 pointer-events-none z-0">
+            <script>
+                const musics = [
+                    @foreach ($musics as $music)
+                        {
+                            image: "{{ asset('storage/' . $music->image) }}",
+                            artist: {!! json_encode($music->artist->name ?? 'Top Artist') !!},
+                            title: {!! json_encode($music->title) !!}
+                        },
+                    @endforeach
+                ];
+
+                let lastIndex = -1;
+                const bannerImage = document.getElementById('bannerImage');
+                const bannerImageNext = document.getElementById('bannerImageNext');
+                const bannerArtist = document.getElementById('bannerArtist');
+                const bannerTitle = document.getElementById('bannerTitle');
+
+                setInterval(() => {
+                    // Pilih index acak yang berbeda
+                    let randomIndex;
+                    do {
+                        randomIndex = Math.floor(Math.random() * musics.length);
+                    } while (musics.length > 1 && randomIndex === lastIndex);
+                    lastIndex = randomIndex;
+
+                    // Siapkan next image dan teks (tapi sembunyikan dulu)
+                    bannerImageNext.src = musics[randomIndex].image;
+                    bannerImageNext.classList.remove('opacity-0');
+                    bannerImageNext.classList.add('opacity-100');
+
+                    // Fade out teks
+                    bannerArtist.classList.add('opacity-0');
+                    bannerTitle.classList.add('opacity-0');
+
+                    // Setelah overlay image sudah tampil, baru swap image utama & update teks
+                    setTimeout(() => {
+                        // Ganti image utama
+                        bannerImage.src = musics[randomIndex].image;
+                        // Sembunyikan overlay
+                        bannerImageNext.classList.remove('opacity-100');
+                        bannerImageNext.classList.add('opacity-0');
+                        // Update teks
+                        bannerArtist.textContent = musics[randomIndex].artist;
+                        bannerTitle.textContent = musics[randomIndex].title;
+                        // Fade in teks
+                        bannerArtist.classList.remove('opacity-0');
+                        bannerTitle.classList.remove('opacity-0');
+                    }, 500); // waktu fade cross-fade
+                }, 4000);
+            </script>
         @else
             <p>Data musik kosong</p>
         @endif
@@ -43,48 +85,89 @@
             <!-- Made for you Section -->
             <div class="mb-8">
                 <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-2xl font-bold">Made for you</h2>
-                    <a href="#" class="text-accent hover:underline">Show all</a>
+                    <h2 class="text-2xl font-bold text-darkBlue">Made for you</h2>
                 </div>
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                    @foreach ($musics->take(5) as $music)
+                <div id="musicGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    @foreach ($musics->take(15) as $music)
+                        <!-- Card lagu -->
                         <a href="{{ route('music.show', $music->id) }}"
-                            class="bg-darkBlue rounded-lg p-4 hover:bg-opacity-80 transition block">
-                            <div class="aspect-square bg-purple-900 rounded-lg mb-3 overflow-hidden">
+                            class="block bg-white rounded-lg p-4 shadow hover:shadow-lg transition">
+                            <div class="aspect-square bg-gray-100 rounded-lg mb-3 overflow-hidden">
                                 <img src="{{ asset('storage/' . $music->image) }}" alt="{{ $music->title }}"
                                     class="w-full h-full object-cover">
                             </div>
-                            <h3 class="font-semibold">{{ $music->title }}</h3>
-                            <p class="text-sm text-gray-400">{{ $music->artist->name ?? '-' }}</p>
+                            <h3 class="font-semibold text-darkBlue">{{ $music->title }}</h3>
+                            <p class="text-sm text-gray-700">{{ $music->artist->name ?? '-' }}</p>
                             <p class="text-xs text-gray-500 mt-1">{{ $music->genre->name ?? '-' }}</p>
                         </a>
                     @endforeach
                 </div>
+                <!-- Loader -->
+                <div id="musicLoader" class="flex justify-center py-6 hidden">
+                    <div class="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin"></div>
+                </div>
             </div>
 
+            <script>
+                let offset = 15;
+                let loading = false;
+                let reachEnd = false;
+
+                function loadMoreMusics() {
+                    if (loading || reachEnd) return;
+                    loading = true;
+                    document.getElementById('musicLoader').classList.remove('hidden');
+
+                    fetch(`{{ route('music.lazyload') }}?offset=${offset}&limit=15`)
+                        .then(res => res.text())
+                        .then(html => {
+                            if (html.trim() === '') {
+                                reachEnd = true;
+                            } else {
+                                document.getElementById('musicGrid').insertAdjacentHTML('beforeend', html);
+                                offset += 15;
+                            }
+                        })
+                        .finally(() => {
+                            loading = false;
+                            document.getElementById('musicLoader').classList.add('hidden');
+                        });
+                }
+
+                // Infinite scroll
+                window.addEventListener('scroll', function() {
+                    if (reachEnd) return;
+                    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                    const windowHeight = window.innerHeight;
+                    const docHeight = document.documentElement.scrollHeight;
+                    // When near bottom
+                    if (scrollTop + windowHeight + 200 >= docHeight) {
+                        loadMoreMusics();
+                    }
+                });
+            </script>
+
+
             <!-- Recently Played Section -->
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-2xl font-bold">Recently played</h2>
+            {{-- <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold text-darkBlue">Recently played</h2>
                 <a href="#" class="text-accent hover:underline">Show all</a>
             </div>
-            <!-- Recently Played Section -->
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                 @forelse ($recentlyPlayed as $music)
-                    <div class="bg-darkBlue rounded-lg p-4 hover:bg-opacity-80 transition">
-                        <div class="aspect-square bg-teal-900 rounded-lg mb-3 overflow-hidden">
+                    <div class="bg-white rounded-lg p-4 shadow hover:shadow-lg transition">
+                        <div class="aspect-square bg-gray-100 rounded-lg mb-3 overflow-hidden">
                             <img src="{{ asset('storage/' . $music->image) }}" alt="{{ $music->title }}"
                                 class="w-full h-full object-cover">
                         </div>
-                        <h3 class="font-semibold truncate">{{ $music->title }}</h3>
-                        <p class="text-sm text-gray-400 truncate">{{ $music->artist->name ?? '-' }}</p>
+                        <h3 class="font-semibold text-darkBlue truncate">{{ $music->title }}</h3>
+                        <p class="text-sm text-gray-700 truncate">{{ $music->artist->name ?? '-' }}</p>
                         <p class="text-xs text-gray-500 mt-1">{{ $music->genre->name ?? '-' }}</p>
                     </div>
                 @empty
                     <p class="text-gray-400 col-span-full">Belum ada lagu yang diputar.</p>
                 @endforelse
-            </div>
-
-
+            </div> --}}
         </div>
 
         <!-- Right Sidebar -->
@@ -92,20 +175,19 @@
             <!-- Trending Songs -->
             <div class="mb-8">
                 <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold">POPULAR SONGS</h2>
+                    <h2 class="text-xl font-bold text-darkBlue">POPULAR SONGS</h2>
                     <a href="#" class="text-accent hover:underline">Show all</a>
                 </div>
                 <div class="space-y-3">
                     @foreach ($popularMusics->take(8) as $music)
-                        <div
-                            class="flex items-center bg-darkBlue bg-opacity-50 rounded-lg p-2 hover:bg-opacity-70 transition">
-                            <div class="w-12 h-12 rounded overflow-hidden mr-3 flex-shrink-0">
-                                <img src="{{ $music->image ?? '/placeholder.svg?height=48&width=48' }}"
-                                    alt="{{ $music->title }}" class="w-full h-full object-cover">
+                        <div class="flex items-center bg-white rounded-lg p-2 shadow hover:shadow-lg transition">
+                            <div class="w-12 h-12 rounded overflow-hidden mr-3 flex-shrink-0 bg-gray-100">
+                                <img src="{{ asset('storage/' . $music->image) }}" alt="{{ $music->title }}"
+                                    class="w-full h-full object-cover">
                             </div>
                             <div class="flex-grow">
-                                <h3 class="font-medium">{{ $music->title }}</h3>
-                                <p class="text-sm text-gray-400">{{ $music->artist->name ?? '-' }}</p>
+                                <h3 class="font-medium text-darkBlue">{{ $music->title }}</h3>
+                                <p class="text-sm text-gray-700">{{ $music->artist->name ?? '-' }}</p>
                             </div>
                         </div>
                     @endforeach
@@ -115,20 +197,19 @@
             <!-- Trending Albums -->
             <div>
                 <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold">TRENDING ALBUMS</h2>
+                    <h2 class="text-xl font-bold text-darkBlue">TRENDING ALBUMS</h2>
                     <a href="#" class="text-accent hover:underline">Show all</a>
                 </div>
                 <div class="space-y-3">
                     @foreach ($musics->take(1) as $music)
-                        <div
-                            class="flex items-center bg-darkBlue bg-opacity-50 rounded-lg p-2 hover:bg-opacity-70 transition">
-                            <div class="w-12 h-12 rounded overflow-hidden mr-3 flex-shrink-0">
+                        <div class="flex items-center bg-white rounded-lg p-2 shadow hover:shadow-lg transition">
+                            <div class="w-12 h-12 rounded overflow-hidden mr-3 flex-shrink-0 bg-gray-100">
                                 <img src="{{ $music->image ?? '/placeholder.svg?height=48&width=48' }}"
                                     alt="{{ $music->title }}" class="w-full h-full object-cover">
                             </div>
                             <div class="flex-grow">
-                                <h3 class="font-medium">{{ $music->title }}</h3>
-                                <p class="text-sm text-gray-400">{{ $music->artist->name ?? '-' }}</p>
+                                <h3 class="font-medium text-darkBlue">{{ $music->title }}</h3>
+                                <p class="text-sm text-gray-700">{{ $music->artist->name ?? '-' }}</p>
                             </div>
                         </div>
                     @endforeach

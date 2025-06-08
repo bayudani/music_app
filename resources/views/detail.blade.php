@@ -1,17 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $music->title }} - Detail</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
+@section('title', 'Music Streaming Platform')
 
-<body class="bg-gray-900 text-white min-h-screen">
+@section('content')
     <div class="max-w-4xl mx-auto p-6">
-        <a href="{{ url()->previous() }}" class="text-accent hover:underline mb-6 inline-block">← Back</a>
-
+        <a href="{{ url()->previous() }}"
+            class="text-accent hover:underline mb-6 inline-flex items-center gap-2 font-semibold group transition">
+            <svg class="w-5 h-5 group-hover:-translate-x-1 transition" fill="none" stroke="currentColor" stroke-width="2.5"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.25L8.25 12l7.5-7.25" />
+            </svg>
+            Back
+        </a>
         <div class="flex flex-col md:flex-row gap-6 items-start">
             <img src="{{ asset('storage/' . $music->image) }}" alt="{{ $music->title }}"
                 class="w-full md:w-64 h-auto rounded-lg object-cover shadow-lg">
@@ -60,7 +60,4 @@
             document.cookie = `recentlyPlayed=${recently.join(',')}; path=/`;
         });
     </script>
-
-</body>
-
-</html>
+@endsection
