@@ -13,9 +13,9 @@ class MusicController extends Controller
         $musics = Music::all(); // Ganti dengan query sesuai kebutuhan
         $recentlyPlayed = []; // Ganti dengan logika untuk lagu yang baru diputar
         $popularMusics = music::orderBy('click_count', 'desc')
-                          ->take(5) // ambil 5 lagu terpopuler
-                          ->get();
-        return view('home', compact('musics', 'recentlyPlayed','popularMusics')); // Buat view home.blade.php jika perlu
+            ->take(5) // ambil 5 lagu terpopuler
+            ->get();
+        return view('home', compact('musics', 'recentlyPlayed', 'popularMusics')); // Buat view home.blade.php jika perlu
     }
 
     public function features()
@@ -36,17 +36,25 @@ class MusicController extends Controller
     public function show($id)
     {
         $music = Music::findOrFail($id);
-         // Tambah 1 ke jumlah klik
+        // Tambah 1 ke jumlah klik
         $music->increment('click_count');
         return view('detail', compact('music')); // Buat view music/show.blade.php jika perlu
     }
     public function popular()
-{
-    $popularMusics = music::orderBy('click_count', 'desc')
-                          ->take(5) // ambil 5 lagu terpopuler
-                          ->get();
+    {
+        $popularMusics = music::orderBy('click_count', 'desc')
+            ->take(5) // ambil 5 lagu terpopuler
+            ->get();
 
-    return view('music.popular', compact('popularMusics'));
-}
+        return view('music.popular', compact('popularMusics'));
+    }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('q');
+
+        $results = music::search($query)->get();
+
+        return view('search-results', compact('results', 'query'));
+    }
 }

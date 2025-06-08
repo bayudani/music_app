@@ -33,10 +33,15 @@
         <div class="flex items-center">
             <img src="https://via.placeholder.com/24" alt="Logo" class="w-6 h-6">
         </div>
-        <div class="flex-1 mx-4">
-            <input type="text" placeholder="Search"
-                class="w-full p-2 rounded border border-gray-700 bg-dark text-white">
-        </div>
+        <form method="GET" action="{{ route('music.search') }}" class="flex flex-1 mx-4">
+            <input type="text" name="q" placeholder="Search lagu atau artis..."
+                class="flex-grow p-2 rounded-l border border-gray-700 bg-dark text-white focus:outline-none"
+                value="{{ request('q') }}">
+            <button type="submit"
+                class="px-4 bg-accent rounded-r text-white hover:bg-accent-dark transition duration-200">
+                Search
+            </button>
+        </form>
         <div class="flex items-center space-x-4">
             <a href="{{ route('songs') }}"
                 class="{{ request()->routeIs('songs') ? 'text-accent' : 'text-gray-400' }} hover:text-accent">Songs</a>
