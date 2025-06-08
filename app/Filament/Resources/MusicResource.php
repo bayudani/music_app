@@ -31,17 +31,21 @@ class MusicResource extends Resource
                 Forms\Components\Select::make('genre_id')
                     ->relationship('genre', 'name')
                     ->required(),
-
+                Forms\Components\FileUpload::make('image')
+                    ->image()
+                    ->required(),
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('detail')
                     ->maxLength(255),
-                Forms\Components\RichEditor::make('iframe_spotify')
-                    ->toolbarButtons(['codeBlock']) // biar bisa tempel HTML
-                    ->disableToolbarButtons(['attachFiles']) // opsional
-                    // ->maxLength(65535)
+                Forms\Components\TextInput::make('iframe_spotify')
                     ->required(),
+                // Forms\Components\RichEditor::make('iframe_spotify')
+                //     ->toolbarButtons(['codeBlock']) // biar bisa tempel HTML
+                //     ->disableToolbarButtons(['attachFiles']) // opsional
+                //     // ->maxLength(65535)
+                //     ->required(),
             ]);
     }
 
@@ -63,8 +67,8 @@ class MusicResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('iframe_spotify')
                     ->html()
-                    ->limit(50), // biar gak terlalu panjang
-
+                    ->limit(50),
+                Tables\Columns\ImageColumn::make('image'),
                 // Tables\Columns\TextColumn::make('created_at')
                 //     ->dateTime()
                 //     ->sortable()

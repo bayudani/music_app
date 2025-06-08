@@ -10,22 +10,29 @@ class MusicController extends Controller
     // get all music tracks
     public function index()
     {
-
-        $musics = music::with(['artist', 'genre'])->get();
-        // if music not found
-        if ($musics->isEmpty()) {
-            return redirect()->route('music.index')->with('error', 'No music found');
-        }
-        return view('music.index', compact('musics'));
+        $musics = Music::all(); // Ganti dengan query sesuai kebutuhan
+        $recentlyPlayed = []; // Ganti dengan logika untuk lagu yang baru diputar
+        return view('home', compact('musics', 'recentlyPlayed'));
     }
 
-    // get music by id
+    public function features()
+    {
+        return view('features'); // Buat view features.blade.php jika perlu
+    }
+
+    public function about()
+    {
+        return view('about'); // Buat view about.blade.php jika perlu
+    }
+
+    public function contact()
+    {
+        return view('contact'); // Buat view contact.blade.php jika perlu
+    }
+
     public function show($id)
     {
-        $music = music::with(['artist', 'genre'])->findOrFail($id);
-        if (!$music) {
-            return redirect()->route('music.index')->with('error', 'Music not found');
-        }
-        return view('music.show', compact('music'));
+        $music = Music::findOrFail($id);
+        return view('detail', compact('music')); // Buat view music/show.blade.php jika perlu
     }
 }
