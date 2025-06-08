@@ -10,9 +10,22 @@ class MusicController extends Controller
     // get all music tracks
     public function index()
     {
-        $musics = Music::all(); // Ganti dengan query sesuai kebutuhan
-        $recentlyPlayed = []; // Ganti dengan logika untuk lagu yang baru diputar
-        return view('home', compact('musics', 'recentlyPlayed'));
+        $musics = Music::with(['artist', 'genre'])->get();
+        // $musics = Music::all(); // Ganti dengan query sesuai kebutuhan
+        // $recentlyPlayed = []; // Ganti dengan logika untuk lagu yang baru diputar
+        $recentIds = [];
+        if (isset($_COOKIE['recentlyPlayed'])) {
+            $recentIds = explode(',', $_COOKIE['recentlyPlayed']);
+        }
+
+        $recentlyPlayed = $musics->whereIn('id', $recentIds)->sortBy(function ($music) use ($recentIds) {
+            return array_search($music->id, $recentIds);
+        });
+
+        return view('home', [
+            'musics' => $musics,
+            'recentlyPlayed' => $recentlyPlayed,
+        ]);
     }
 
     public function features()
