@@ -31,7 +31,9 @@ class MusicResource extends Resource
                 Forms\Components\Select::make('genre_id')
                     ->relationship('genre', 'name')
                     ->required(),
-
+                Forms\Components\FileUpload::make('image')
+                    ->image()
+                    ->required(),
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
@@ -64,6 +66,9 @@ class MusicResource extends Resource
                 Tables\Columns\TextColumn::make('iframe_spotify')
                     ->html()
                     ->limit(50), // biar gak terlalu panjang
+                Tables\Columns\ImageColumn::make('image')
+                    ->circular()
+                    ->rounded(),
 
                 // Tables\Columns\TextColumn::make('created_at')
                 //     ->dateTime()
