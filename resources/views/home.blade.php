@@ -67,6 +67,7 @@
                 <h2 class="text-2xl font-bold">Recently played</h2>
                 <a href="#" class="text-accent hover:underline">Show all</a>
             </div>
+            <!-- Recently Played Section -->
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                 @forelse ($recentlyPlayed as $music)
                     <div class="bg-darkBlue rounded-lg p-4 hover:bg-opacity-80 transition">
@@ -83,6 +84,7 @@
                 @endforelse
             </div>
 
+
         </div>
 
         <!-- Right Sidebar -->
@@ -90,11 +92,11 @@
             <!-- Trending Songs -->
             <div class="mb-8">
                 <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold">TRENDING SONGS</h2>
+                    <h2 class="text-xl font-bold">POPULAR SONGS</h2>
                     <a href="#" class="text-accent hover:underline">Show all</a>
                 </div>
                 <div class="space-y-3">
-                    @foreach ($musics->take(8) as $music)
+                    @foreach ($popularMusics->take(8) as $music)
                         <div
                             class="flex items-center bg-darkBlue bg-opacity-50 rounded-lg p-2 hover:bg-opacity-70 transition">
                             <div class="w-12 h-12 rounded overflow-hidden mr-3 flex-shrink-0">

@@ -67,8 +67,11 @@ class MusicResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('iframe_spotify')
                     ->html()
-                    ->limit(50),
-                Tables\Columns\ImageColumn::make('image'),
+                    ->limit(50), // biar gak terlalu panjang
+                Tables\Columns\ImageColumn::make('image')
+                    ->circular()
+                    ->rounded(),
+
                 // Tables\Columns\TextColumn::make('created_at')
                 //     ->dateTime()
                 //     ->sortable()
