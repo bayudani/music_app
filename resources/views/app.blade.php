@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Music Streaming Platform')</title>
+    <title>@yield('title', 'MusicKita | Musik, Ceria, Kita')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -34,10 +34,10 @@
     <nav class="bg-white shadow-md font-inter relative z-20">
         <div class="max-w-7xl mx-auto flex items-center justify-between py-6 px-4 sm:px-6 lg:px-8 relative">
             <!-- Logo -->
-            <div class="flex items-center flex-shrink-0">
+            <a href="{{ route('songs') }}" class="flex items-center flex-shrink-0">
                 {{-- <img src="https://via.placeholder.com/32" alt="Logo" class="w-8 h-8 mr-2"> --}}
-                <span class="font-bold text-lg text-darkBlue">MusicApp</span>
-            </div>
+                <span class="font-bold text-lg text-blue-950">MusicKita</span>
+            </a>
             <!-- Hamburger button (mobile) -->
             <div class="flex lg:hidden">
                 <button id="navbar-toggle"
@@ -49,30 +49,30 @@
                 </button>
             </div>
             <!-- Search Bar (desktop & tablet) -->
-            <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-full max-w-xl px-2 z-10">
-                <form method="GET" action="{{ route('music.search') }}" class="flex items-center w-full">
-                    <div class="relative flex-grow">
-                        <input type="text" name="q" placeholder="Temukan lagu anda"
-                            class="w-full py-2 px-4 pr-10 rounded-full border border-gray-300 bg-white text-darkBlue focus:outline-none focus:border-accent transition duration-200"
-                            value="{{ request('q') }}">
-                        <button type="submit"
-                            class="absolute right-2 top-1/2 transform -translate-y-1/2 text-accent hover:text-accentDark focus:outline-none"
-                            aria-label="Cari">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
-                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </form>
-            </div>
+            @if (request()->routeIs('songs'))
+                <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-full max-w-xl px-2 z-10">
+                    <form method="GET" action="{{ route('music.search') }}" class="flex items-center w-full">
+                        <div class="relative flex-grow">
+                            <input type="text" name="q" placeholder="Temukan lagu anda"
+                                class="w-full py-2 px-4 pr-10 rounded-full border border-gray-300 bg-white text-darkBlue focus:outline-none focus:border-accent transition duration-200"
+                                value="{{ request('q') }}">
+                            <button type="submit"
+                                class="absolute right-2 top-1/2 transform -translate-y-1/2 text-accent hover:text-accentDark focus:outline-none"
+                                aria-label="Cari">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            @endif
             <!-- Menu (desktop & tablet) -->
             <div class="hidden lg:flex items-center space-x-6 ml-auto z-10">
                 <a href="{{ route('songs') }}"
                     class="{{ request()->routeIs('songs') ? 'text-accent font-semibold' : 'text-gray-500' }} hover:text-accent transition-colors duration-150">Songs</a>
-                <a href="{{ route('features') }}"
-                    class="{{ request()->routeIs('features') ? 'text-accent font-semibold' : 'text-gray-500' }} hover:text-accent transition-colors duration-150">Features</a>
                 <a href="{{ route('about') }}"
                     class="{{ request()->routeIs('about') ? 'text-accent font-semibold' : 'text-gray-500' }} hover:text-accent transition-colors duration-150">About</a>
                 <a href="{{ route('contact') }}"
@@ -82,26 +82,27 @@
         <!-- Mobile menu, show/hide based on menu state. -->
         <div id="navbar-menu" class="lg:hidden hidden px-4 pb-4 bg-white shadow-md border-t border-gray-100">
             <div class="flex flex-col gap-3">
-                <form method="GET" action="{{ route('music.search') }}" class="flex items-center w-full mt-2">
-                    <div class="relative flex-grow">
-                        <input type="text" name="q" placeholder="Temukan lagu anda"
-                            class="w-full py-2 px-4 pr-10 rounded-full border border-gray-300 bg-white text-darkBlue focus:outline-none focus:border-accent transition duration-200"
-                            value="{{ request('q') }}">
-                        <button type="submit"
-                            class="absolute right-2 top-1/2 transform -translate-y-1/2 text-accent hover:text-accentDark focus:outline-none"
-                            aria-label="Cari">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
-                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </form>
+                @if (request()->routeIs('songs'))
+                    <form method="GET" action="{{ route('music.search') }}" class="flex items-center w-full mt-2">
+                        <div class="relative flex-grow">
+                            <input type="text" name="q" placeholder="Temukan lagu anda"
+                                class="w-full py-2 px-4 pr-10 rounded-full border border-gray-300 bg-white text-darkBlue focus:outline-none focus:border-accent transition duration-200"
+                                value="{{ request('q') }}">
+                            <button type="submit"
+                                class="absolute right-2 top-1/2 transform -translate-y-1/2 text-accent hover:text-accentDark focus:outline-none"
+                                aria-label="Cari">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                @endif
+                <!-- MENU LINKS -->
                 <a href="{{ route('songs') }}"
                     class="block py-2 px-2 rounded {{ request()->routeIs('songs') ? 'text-accent font-semibold' : 'text-gray-700' }} hover:text-accent transition-colors duration-150">Songs</a>
-                <a href="{{ route('features') }}"
-                    class="block py-2 px-2 rounded {{ request()->routeIs('features') ? 'text-accent font-semibold' : 'text-gray-700' }} hover:text-accent transition-colors duration-150">Features</a>
                 <a href="{{ route('about') }}"
                     class="block py-2 px-2 rounded {{ request()->routeIs('about') ? 'text-accent font-semibold' : 'text-gray-700' }} hover:text-accent transition-colors duration-150">About</a>
                 <a href="{{ route('contact') }}"
@@ -129,12 +130,14 @@
                     <!-- Logo -->
                     <div class="flex items-center flex-shrink-0">
                         {{-- <img src="https://via.placeholder.com/32" alt="Logo" class="w-8 h-8 mr-2"> --}}
-                        <span class="font-bold text-lg text-white">MusicApp</span>
+                        <span class="font-bold text-lg text-white">MusicKita</span>
                     </div> <!-- Mission -->
                     <br>
-                    <p class="max-w-md text-base text-white/60 leading-relaxed">
-                        Our mission is to democratize computational drug discovery tools and empower researchers and
-                        organizations worldwide.
+                    <p class="max-w-md text-xs text-white/60 leading-relaxed">
+                        Rasakan pengalaman mendengarkan musik yang lebih personal dan interaktif
+                        genre unik, hingga karya musisi lokal yang inspiratif.
+                        Gabung sekarang di Musickita, jadikan setiap harimu lebih berwarna bersama irama pilihanmu!
+                        Musickita – Musik, Cerita, Kita.
                     </p>
                 </div>
                 <!-- Social -->
@@ -187,10 +190,9 @@
                     <a href="#" class="flex items-center gap-2 text-white">
                         <span class="inline-block w-2 h-2 rounded-full bg-[#A084FF]"></span> Home
                     </a>
-                    <a href="#" class="hover:text-[#A084FF] transition">Song</a>
-                    <a href="#" class="hover:text-[#A084FF] transition">Features</a>
-                    <a href="#" class="hover:text-[#A084FF] transition">About</a>
-                    <a href="#" class="hover:text-[#A084FF] transition">Contact Us</a>
+                    <a href="{{ route('songs') }}" class="hover:text-[#A084FF] transition">Song</a>
+                    <a href="{{ route('about') }}" class="hover:text-[#A084FF] transition">About</a>
+                    <a href="{{ route('contact') }}" class="hover:text-[#A084FF] transition">Contact Us</a>
                 </nav>
             </div>
         </div>
