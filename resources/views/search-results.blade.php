@@ -16,6 +16,15 @@
 
 @section('content')
 
+    <a href="{{ url()->previous() }}"
+        class="text-accent hover:underline mb-6 inline-flex items-center gap-2 font-semibold group transition">
+        <svg class="w-5 h-5 group-hover:-translate-x-1 transition" fill="none" stroke="currentColor" stroke-width="2.5"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.25L8.25 12l7.5-7.25" />
+        </svg>
+        Back
+    </a>
+
     <div class="mb-8">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl mb-4">Hasil pencarian untuk: "{{ $query }}"</h2>

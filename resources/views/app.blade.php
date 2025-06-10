@@ -142,14 +142,14 @@
                 </div>
                 <!-- Social -->
                 <div class="flex gap-4">
-                    <!-- LinkedIn -->
-                    <a href="https://linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"
+                    <!-- Email -->
+                    <a href="https://gmail.com/" target="_blank" rel="noopener" aria-label="LinkedIn"
                         class="inline-flex items-center justify-center w-10 h-10 border border-white rounded-full hover:bg-white hover:text-[#1A2235] transition">
-                        <!-- LinkedIn SVG -->
+                        <!-- Email SVG -->
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M19 0h-14c-2.761 0-5 2.238-5 5v14c0 2.762 2.239 5 5 5h14c2.762 0 5-2.238 5-5v-14c0-2.762-2.238-5-5-5zm-12.5 19h-3v-9h3v9zm-1.5-10.268c-.966 0-1.75-.785-1.75-1.75s.784-1.75 1.75-1.75 1.75.785 1.75 1.75-.784 1.75-1.75 1.75zm15.5 10.268h-3v-4.604c0-1.099-.021-2.512-1.531-2.512-1.531 0-1.767 1.197-1.767 2.433v4.683h-3v-9h2.884v1.229h.041c.403-.763 1.384-1.566 2.848-1.566 3.045 0 3.607 2.005 3.607 4.614v4.723z" />
-                        </svg>
+                                        <path
+                                            d="M2 4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v0.01L12 13 2 4.01V4zm0 2.236V20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6.236l-10 8.25-10-8.25z" />
+                                    </svg>
                     </a>
                     <!-- Instagram -->
                     <a href="https://instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"
@@ -187,9 +187,9 @@
             <!-- Right: Menu -->
             <div class="flex-1 flex flex-col justify-center items-start md:items-end">
                 <nav class="flex flex-col gap-6 text-2xl md:text-3xl font-medium">
-                    <a href="#" class="flex items-center gap-2 text-white">
-                        <span class="inline-block w-2 h-2 rounded-full bg-[#A084FF]"></span> Home
-                    </a>
+                    {{-- <a href="#" class="flex items-center gap-2 text-white">
+                        <span class="inline-block w-2 h-2 rounded-full bg-[#A084FF]"></span> Song
+                    </a> --}}
                     <a href="{{ route('songs') }}" class="hover:text-[#A084FF] transition">Song</a>
                     <a href="{{ route('about') }}" class="hover:text-[#A084FF] transition">About</a>
                     <a href="{{ route('contact') }}" class="hover:text-[#A084FF] transition">Contact Us</a>

@@ -214,7 +214,7 @@
             </div>
 
             <!-- Trending Albums -->
-            <div>
+            {{-- <div>
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-xl font-bold text-darkBlue">TRENDING ALBUMS</h2>
                     <a href="#" class="text-accent hover:underline">Show all</a>
@@ -233,7 +233,7 @@
                         </div>
                     @endforeach
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 @endsection

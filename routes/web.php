@@ -10,12 +10,13 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', [MusicController::class, 'index']);
+// Route::get('/', [MusicController::class, 'index']);
 Route::get('/', [MusicController::class, 'index'])->name('home');
+Route::get('/songs', [MusicController::class, 'index'])->name('songs');
+Route::redirect('/', '/songs')->name('home');
 
 
 Route::get('/music/lazyload', [MusicController::class, 'lazyLoad'])->name('music.lazyload');
-Route::get('/songs', [MusicController::class, 'index'])->name('songs');
 Route::get('/about', [MusicController::class, 'about'])->name('about');
 Route::get('/contact', [MusicController::class, 'contact'])->name('contact');
 Route::get('/search', [MusicController::class, 'search'])->name('music.search');
