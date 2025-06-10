@@ -8,11 +8,11 @@
         <div class="max-w-4xl mx-auto px-4 ">
             <!-- Header Intro -->
             <div class="text-center mb-10">
-                <h3 class="text-lg md:text-2xl font-bold text-gray-900 mb-4">
-                    <span class="block text-2xl md:text-3xl lg:text-4xl font-extrabold text-gray-900 mb-2">
+                <h3 class="text-base md:text-sm font-bold text-gray-900 mb-4">
+                    <span class="block text-base md:text-sm lg:text-lg font-reguler text-gray-900 mb-2">
                         Nikmati Musik Tanpa Batas di Musickita!
                     </span>
-                    <span class="block text-gray-600 font-medium">
+                    <span class="block text-justify text-gray-600 font-medium">
                         Temukan jutaan lagu, album, dan artis favorit hanya dalam satu genggaman. Dengan Musickita, kamu
                         bisa streaming musik kapan saja dan di mana saja, menciptakan playlist pribadi, dan menemukan
                         rekomendasi lagu yang sesuai dengan seleramu.<br>
